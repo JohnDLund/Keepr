@@ -58,5 +58,24 @@ namespace Keepr.Repositories
         }
 
 
+
+        internal Keep Edit(Keep original)
+        {
+            string sql = @"
+        UPDATE keeps
+        SET
+            name = @Name,
+            description = @Description,
+            img = @Img,
+            isPrivate = @IsPrivate,
+            views = @Views,
+            shares = @Shares,
+            keeps = @Keeps
+        WHERE id = @Id;
+        SELECT * FROM keeps WHERE id = @Id;";
+            return _db.QueryFirstOrDefault<Keep>(sql, original);
+        }
+
+
     }
 }

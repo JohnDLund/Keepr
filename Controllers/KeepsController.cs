@@ -111,5 +111,21 @@ namespace Keepr.Controllers
             }
         }
 
+
+        [HttpPut("{id}")]
+        [Authorize]
+        public ActionResult<Keep> Edit([FromBody] Keep newKeep, int id)
+        {
+            try
+            {
+                newKeep.Id = id;
+                return Ok(_ks.Edit(newKeep));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }
