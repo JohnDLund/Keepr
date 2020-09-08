@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 namespace Keepr.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/[controller]")]
     public class VaultKeepsController : ControllerBase
     {
@@ -53,6 +52,7 @@ namespace Keepr.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public ActionResult<VaultKeep> Post([FromBody] VaultKeep newVaultKeep)
         {
             try
@@ -68,11 +68,15 @@ namespace Keepr.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult<VaultKeep> Delete(int id)
         {
             try
             {
-                return Ok(_vks.Delete(id));
+                Claim User = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                string userId = User.Value;
+                return Ok(_vks.Delete(id, userId));
+
             }
             catch (Exception exception)
             {

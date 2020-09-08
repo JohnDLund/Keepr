@@ -24,7 +24,7 @@ namespace Keepr.Repositories
 
         internal Keep GetById(int keepId)
         {
-            string sql = "SELECT * FROM keeps WHERE id = @keepId";
+            string sql = "SELECT * FROM keeps WHERE id = @keepId;";
             return _db.QueryFirstOrDefault<Keep>(sql, new { keepId });
         }
 
@@ -32,14 +32,14 @@ namespace Keepr.Repositories
 
         internal IEnumerable<Keep> GetByUserId(int userId)
         {
-            string sql = "SELECT * FROM keeps WHERE userId = @userId";
+            string sql = "SELECT * FROM keeps WHERE userId = @userId;";
             return _db.Query<Keep>(sql, new { userId });
         }
 
 
 
 
-        internal int Create(Keep KeepData)
+        internal int Create(Keep newKeep)
         {
             string sql = @"
         INSERT INTO keeps
@@ -47,14 +47,15 @@ namespace Keepr.Repositories
         VALUES
         (@Name, @Description, @UserId, @Img, @IsPrivate, @Views, @Shares, @Keeps);
         SELECT LAST_INSERT_ID();";
-            return _db.ExecuteScalar<int>(sql, KeepData);
+            return _db.ExecuteScalar<int>(sql, newKeep);
         }
 
 
-        internal void Delete(int Id)
+        internal bool Delete(int id, string userId)
         {
-            string sql = "DELETE FROM keeps WHERE id = @Id";
-            _db.Execute(sql, new { Id });
+            string sql = "DELETE FROM keeps WHERE id = @id AND userId = @userId;";
+            int deleted = _db.Execute(sql, new { id, userId });
+            return deleted == 1;
         }
 
 
