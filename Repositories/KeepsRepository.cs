@@ -30,7 +30,7 @@ namespace Keepr.Repositories
 
 
 
-        internal IEnumerable<Keep> GetByUserId(int userId)
+        internal IEnumerable<Keep> GetByUserId(string userId)
         {
             string sql = "SELECT * FROM keeps WHERE userId = @userId;";
             return _db.Query<Keep>(sql, new { userId });

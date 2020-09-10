@@ -62,7 +62,7 @@ namespace Keepr.Controllers
 
 
         [HttpGet("user")]
-        public ActionResult<IEnumerable<Vault>> GetByUserId(string userId)
+        public ActionResult<IEnumerable<Vault>> GetByUserId()
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Keepr.Controllers
                 {
                     throw new Exception("You must be logged in to get vaults");
                 }
-                return Ok(_vs.GetByUserId(userId));
+                return Ok(_vs.GetByUserId(user.Value));
             }
             catch (Exception exception)
             {

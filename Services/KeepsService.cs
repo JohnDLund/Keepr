@@ -28,7 +28,7 @@ namespace Keepr.Services
             return exists;
         }
 
-        public IEnumerable<Keep> GetByUserId(int user)
+        public IEnumerable<Keep> GetByUserId(string user)
         {
             IEnumerable<Keep> exists = _repo.GetByUserId(user);
             if (exists == null) { throw new Exception("No Keep Exists"); }

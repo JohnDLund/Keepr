@@ -1,34 +1,40 @@
 <template>
-  <div class="home">
-    <div v-for="publicKeep in publicKeeps" :publicKeepData="publicKeep" :key="publicKeep.id">
-      <div>{{publicKeep.name}}</div>
-      <div>{{publicKeep.description}}</div>
-      <div>{{publicKeep.views}}</div>
-      <div>{{publicKeep.keeps}}</div>
-      <img :src="publicKeep.img" />
+  <div class="home container-fluid">
+    <div class="row p-3">
+      <keepCard
+        class="m-2"
+        v-for="publicKeep in publicKeeps"
+        :keepData="publicKeep"
+        :key="publicKeep.id"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import keepCard from "../components/keepCard";
+
 export default {
   name: "home",
   mounted() {
+    this.$store.dispatch("getMyVaults");
     this.$store.dispatch("getPublicKeeps");
   },
   computed: {
-    user() {
-      return this.$store.state.user;
-    },
-
     publicKeeps() {
       return this.$store.state.publicKeeps;
+    },
+    vaults() {
+      return this.$store.state.vaults;
     },
   },
   methods: {
     logout() {
       this.$store.dispatch("logout");
     },
+  },
+  components: {
+    keepCard,
   },
 };
 </script>

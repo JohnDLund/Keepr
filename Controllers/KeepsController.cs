@@ -38,10 +38,13 @@ namespace Keepr.Controllers
 
         [HttpGet("user")]
         [Authorize]
-        public ActionResult<IEnumerable<Keep>> GetByUserId(int userId)
+        public ActionResult<IEnumerable<Keep>> GetByUserId()
         {
             try
             {
+                Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                string userId = user.Value;
+
                 return Ok(_ks.GetByUserId(userId));
             }
             catch (Exception e)
