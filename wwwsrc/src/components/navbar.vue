@@ -33,11 +33,12 @@
             aria-expanded="false"
           >My Vaults</a>
 
-          <div class="dropdown-menu bg-secondary">
+          <div class="dropdown-menu bg-secondary shadow">
             <!-- <router-view :key="$route.fullPath"></router-view> -->
             <router-link
               v-for="vault in vaults"
               :key="vault.id"
+              href="#"
               class="dropdown-item bg-secondary text-capitalize text-center"
               :to="{ name: 'vault', params: { id: vault.id } }"
             >{{vault.name}}</router-link>
@@ -46,7 +47,7 @@
       </ul>
       <span class="navbar-text">
         <button class="btn btn-success" @click="login" v-if="!$auth.isAuthenticated">Login</button>
-        <button class="btn btn-danger" @click="logout" v-else>logout</button>
+        <button class="btn btn-danger shadow" @click="logout" v-else>logout</button>
       </span>
     </div>
   </nav>
@@ -72,9 +73,11 @@ export default {
       this.$store.dispatch("setBearer", this.$auth.bearer);
       console.log("this.$auth.user: ", this.$auth.user);
       this.$store.dispatch("getMyVaults");
+      this.$store.dispatch("getUserId");
     },
     async logout() {
       this.$store.dispatch("resetBearer");
+      this.$store.state.userId = {};
       await this.$auth.logout({ returnTo: window.location.origin });
     },
   },

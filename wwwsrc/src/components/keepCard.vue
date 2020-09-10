@@ -1,17 +1,27 @@
 <template>
-  <div
-    class="card p-2 shadow border border-dark"
-    style="width: 18rem;"
-    @click="makeActiveKeep(keepData.id), moveToKeepDetails(keepData.id)"
-  >
-    <img :src="keepData.img" class="card-img-top" alt="Keep Image..." />
+  <div class="card p-2 shadow border border-dark" style="width: 18rem;">
+    <img
+      style="height: 200px; width: auto"
+      :src="keepData.img"
+      class="card-img-top"
+      alt="Keep Image..."
+      @click="makeActiveKeep(keepData.id), moveToKeepDetails(keepData.id)"
+    />
     <div class="card-body">
       <h5 class="card-title">{{keepData.name}}</h5>
       <p class="card-text">{{keepData.description}}</p>
       <div class="col-12 d-flex justify-content-between">
-        <i class="fa fa-eye p-3">&nbsp{{keepData.views}}</i>
-        <i class="fa fa-floppy-o p-3">&nbsp{{keepData.keeps}}</i>
-        <i class="fa fa-share-alt p-3">&nbsp{{keepData.shares}}</i>
+        <i class="fa fa-eye p-3">&nbsp;{{keepData.views}}</i>
+        <i class="fa fa-floppy-o p-3">&nbsp;{{keepData.keeps}}</i>
+        <i class="fa fa-share-alt p-3" @click="editKeep">&nbsp;{{keepData.shares}}</i>
+      </div>
+      <div class="row justify-content-between px-3 pt-2">
+        <button
+          class="btn btn-sm btn-danger shadow"
+          @click="deleteKeep(keepData.id)"
+          v-if="keepData.userId == userId"
+        >Delete</button>
+        <i v-if="keepData.isPrivate" class="fa fa-lock">&nbsp; Private</i>
       </div>
     </div>
   </div>
@@ -26,7 +36,12 @@ export default {
     return {};
   },
   mounted() {},
-  computed: {},
+  computed: {
+    userId() {
+      this.$store.dispatch("getUserId");
+      return this.$store.state.userId;
+    },
+  },
   methods: {
     makeActiveKeep(keepId) {
       this.$store.dispatch("getActiveKeep", keepId);
@@ -34,6 +49,19 @@ export default {
     },
     moveToKeepDetails(keepId) {
       this.$router.push({ name: "keepDetails", params: { id: keepId } });
+    },
+    deleteKeep(keepId) {
+      this.$store.dispatch("deleteKeep", keepId);
+    },
+    editKeep() {
+      this.$store.dispatch("editKeep", {
+        id: this.keepData.id,
+        Shares: this.keepData.shares + 1,
+        Img: this.keepData.img,
+        Description: this.keepData.description,
+        Name: this.keepData.name,
+        UserId: this.keepData.userId,
+      });
     },
   },
   components: {},

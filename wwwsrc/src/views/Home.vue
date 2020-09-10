@@ -1,6 +1,7 @@
 <template>
   <div class="home container-fluid">
-    <div class="row p-3">
+    <h1 class="row p-3 justify-content-center border-top border-dark">Public Keeps</h1>
+    <div class="row p-3 justify-content-center">
       <keepCard
         class="m-2"
         v-for="publicKeep in publicKeeps"
@@ -17,6 +18,7 @@ import keepCard from "../components/keepCard";
 export default {
   name: "home",
   mounted() {
+    this.$store.state.vaultKeeps = [];
     this.$store.dispatch("getMyVaults");
     this.$store.dispatch("getPublicKeeps");
   },
