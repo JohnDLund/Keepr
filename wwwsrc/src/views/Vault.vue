@@ -17,6 +17,7 @@ import keepCard from "../components/keepCard";
 export default {
   name: "vault",
   mounted() {
+    this.$store.dispatch("getVaultKeepRelationships");
     this.$store.dispatch("getVaultById", this.$route.params.id);
     this.$store.dispatch("getVaultKeeps", this.$route.params.id);
   },

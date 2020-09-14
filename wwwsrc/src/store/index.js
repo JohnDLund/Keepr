@@ -23,7 +23,8 @@ export default new Vuex.Store({
     personalKeeps: [],
     vaults: [],
     activeVault: {},
-    vaultKeeps: []
+    vaultKeeps: [],
+    vaultKeepRelationships: []
   },
 
 
@@ -50,6 +51,10 @@ export default new Vuex.Store({
     setVaultKeeps(state, vaultKeepData) {
       state.vaultKeeps = vaultKeepData
     },
+
+    setVaultKeepRelationships(state, vaultKeepData) {
+      state.vaultKeepRelationships = vaultKeepData
+    }
   },
 
 
@@ -158,6 +163,16 @@ export default new Vuex.Store({
       }
     },
 
+    async getVaultKeepRelationships({ commit }) {
+      try {
+        let res = await api.get("vaultkeeps")
+        console.log("Got the VaultKeepRelationships", res.data);
+        commit("setVaultKeepRelationships", res.data)
+      } catch (err) {
+        console.error(err)
+      }
+    },
+
     async addToVault({ dispatch }, vaultKeepData) {
       try {
         let res = await api.post("vaultkeeps", vaultKeepData)
@@ -190,10 +205,6 @@ export default new Vuex.Store({
         console.error(err)
       }
     },
-
-
-
-
 
 
     setBearer({ }, bearer) {
