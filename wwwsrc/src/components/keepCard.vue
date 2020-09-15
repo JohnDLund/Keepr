@@ -1,7 +1,7 @@
 <template>
   <div class="card p-2 shadow border border-dark" style="width: 18rem;">
     <img
-      style="height: 200px; width: auto"
+      style="object-fit: contain; width: 100%; max-height: 200px;"
       :src="keepData.img"
       class="card-img-top"
       alt="Keep Image..."
@@ -10,6 +10,7 @@
     <div class="card-body">
       <h5 class="card-title">{{keepData.name}}</h5>
       <p class="card-text">{{keepData.description}}</p>
+
       <div class="col-12 d-flex justify-content-between">
         <i class="fa fa-eye p-3">&nbsp;{{keepData.views}}</i>
         <i class="fa fa-floppy-o p-3">&nbsp;{{keepData.keeps}}</i>
@@ -17,10 +18,15 @@
       </div>
       <div class="row justify-content-between px-3 pt-2">
         <button
-          class="btn btn-sm btn-danger shadow"
+          class="btn btn-sm btn-warning shadow"
           @click="deleteKeep(keepData.id)"
           v-if="keepData.userId == userId"
         >Delete</button>
+        <button
+          class="btn btn-sm btn-danger shadow"
+          @click="deleteVaultKeepRelationship"
+          v-if="vaultKeepRelationshipData"
+        >Delete From Vault</button>
         <i v-if="keepData.isPrivate" class="fa fa-lock">&nbsp; Private</i>
       </div>
     </div>
@@ -31,7 +37,7 @@
 <script>
 export default {
   name: "keepCard",
-  props: ["keepData"],
+  props: ["keepData", "vaultKeepRelationshipData"],
   data() {
     return {};
   },
@@ -62,6 +68,13 @@ export default {
         Name: this.keepData.name,
         UserId: this.keepData.userId,
       });
+    },
+
+    deleteVaultKeepRelationship(keepId) {
+      this.$store.dispatch(
+        "deleteVaultKeepRelationship",
+        this.vaultKeepRelationshipData
+      );
     },
   },
   components: {},

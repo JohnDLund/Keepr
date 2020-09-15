@@ -86,6 +86,9 @@ export default {
       this.$router.push({ name: "dashboard" });
     },
   },
+  beforeDestroy() {
+    this.$store.state.activeKeep = {};
+  },
   components: {},
 };
 </script>

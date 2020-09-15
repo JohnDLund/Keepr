@@ -19,6 +19,7 @@ export default {
   name: "home",
   mounted() {
     this.$store.state.vaultKeeps = [];
+    this.$store.state.vaultKeepRelationships = [];
     this.$store.dispatch("getMyVaults");
     this.$store.dispatch("getPublicKeeps");
   },

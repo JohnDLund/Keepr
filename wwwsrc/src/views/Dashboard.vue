@@ -1,21 +1,6 @@
 <template>
   <div class="dashboard container-fluid">
     <h1 class="row p-3 justify-content-center border-top border-dark">My Vaults</h1>
-    <div class="row p-3 justify-content-center">
-      <div v-for="vault in vaults" :key="vault.id" class="card shadow border border-dark m-3 col-3">
-        <div class="card-body">
-          <h5 class="card-title">{{vault.name}}</h5>
-          <p class="card-text">{{vault.description}}</p>
-          <div class="row justify-content-between">
-            <button
-              class="btn btn-sm btn-primary shadow"
-              @click="goToVault(vault.id)"
-            >See Keeps in this Vault</button>
-            <button class="btn btn-sm btn-danger shadow" @click="deleteVault(vault.id)">Delete</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <form class="row justify-content-center align-items-center" @submit.prevent="createNewVault">
       <div class="col-2">
@@ -44,16 +29,23 @@
       </div>
       <button type="submit" class="btn btn-sm btn-primary mt-3 ml-2 shadow">Submit</button>
     </form>
+    <div class="row p-3 justify-content-center">
+      <div v-for="vault in vaults" :key="vault.id" class="card shadow border border-dark m-3 col-3">
+        <div class="card-body">
+          <h5 class="card-title">{{vault.name}}</h5>
+          <p class="card-text">{{vault.description}}</p>
+          <div class="row justify-content-between">
+            <button
+              class="btn btn-sm btn-primary shadow"
+              @click="goToVault(vault.id)"
+            >See Keeps in this Vault</button>
+            <button class="btn btn-sm btn-danger shadow" @click="deleteVault(vault.id)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <h1 class="row p-3 justify-content-center mt-2 border-top border-dark">My Keeps</h1>
-    <div class="row p-3 justify-content-center">
-      <keepCard
-        class="m-2"
-        v-for="personalKeep in personalKeeps"
-        :keepData="personalKeep"
-        :key="personalKeep.id"
-      />
-    </div>
     <form
       class="row justify-content-center align-items-center p-3 mb-4"
       @submit.prevent="createNewKeep"
@@ -107,6 +99,14 @@
       </div>
       <button type="submit" class="btn btn-sm btn-primary mt-3 ml-3 shadow">Submit</button>
     </form>
+    <div class="row p-3 justify-content-center">
+      <keepCard
+        class="m-2"
+        v-for="personalKeep in personalKeeps"
+        :keepData="personalKeep"
+        :key="personalKeep.id"
+      />
+    </div>
   </div>
 </template>
 
@@ -122,6 +122,7 @@ export default {
   },
   mounted() {
     this.$store.state.vaultKeeps = [];
+    this.$store.state.vaultKeepRelationships = [];
     this.$store.dispatch("getMyVaults");
     this.$store.dispatch("getMyKeeps");
   },

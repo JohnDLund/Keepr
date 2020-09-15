@@ -1,19 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
+import { api } from "./AxiosService.js";
 import router from "../router";
 
 Vue.use(Vuex);
-
-let baseUrl = location.host.includes("localhost")
-  ? "https://localhost:5001/"
-  : "/";
-
-let api = Axios.create({
-  baseURL: baseUrl + "api/",
-  timeout: 3000,
-  withCredentials: true
-});
 
 export default new Vuex.Store({
   state: {
@@ -168,6 +159,16 @@ export default new Vuex.Store({
         let res = await api.get("vaultkeeps")
         console.log("Got the VaultKeepRelationships", res.data);
         commit("setVaultKeepRelationships", res.data)
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    async deleteVaultKeepRelationship({ dispatch }, vaultKeepData) {
+      try {
+        let res = await api.delete("vaultkeeps/" + vaultKeepData.id)
+        console.log("Deleted the VaultKeepRelationships", res.data);
+        dispatch("getVaultKeepRelationships", res.data)
+        dispatch("getVaultKeeps", vaultKeepData.vaultId)
       } catch (err) {
         console.error(err)
       }
