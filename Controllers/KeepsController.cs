@@ -11,138 +11,138 @@ using Microsoft.Extensions.Logging;
 
 namespace Keepr.Controllers
 {
-  [ApiController]
-  [Route("api/[controller]")]
-  public class KeepsController : ControllerBase
-  {
-    private readonly KeepsService _ks;
-
-
-    public KeepsController(KeepsService ks)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class KeepsController : ControllerBase
     {
-      _ks = ks;
-    }
+        private readonly KeepsService _ks;
 
 
-
-    [HttpGet]
-    public ActionResult<IEnumerable<Keep>> Get()
-    {
-      try
-      {
-        return Ok(_ks.Get());
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
-
-    [HttpGet("user")]
-    [Authorize]
-    public ActionResult<IEnumerable<Keep>> GetByUserId()
-    {
-      try
-      {
-        Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-        string userId = user.Value;
-
-        return Ok(_ks.GetByUserId(userId));
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
-
-    [HttpGet("{keepId}")]
-    public ActionResult<Keep> GetById(int keepId)
-    {
-      try
-      {
-        Keep foundKeep = _ks.GetById(keepId);
-
-        // Claim userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-        if (foundKeep.IsPrivate == true)
+        public KeepsController(KeepsService ks)
         {
-          return BadRequest("That keep is private");
+            _ks = ks;
         }
-        return Ok(foundKeep);
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
 
 
-    [HttpPost]
-    [Authorize]
-    public ActionResult<Keep> Post([FromBody] Keep newKeep)
-    {
-      try
-      {
-        Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-        newKeep.UserId = user.Value;
-        return Ok(_ks.Create(newKeep));
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
 
-    [HttpDelete("{id}")]
-    [Authorize]
-    public ActionResult<Keep> Delete(int id)
-    {
-      try
-      {
-        Claim User = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-        string userId = User.Value;
-        return Ok(_ks.Delete(id, userId));
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
-
-
-    [HttpPut("{id}")]
-    [Authorize]
-    public ActionResult<Keep> Edit([FromBody] Keep newKeep, int id)
-    {
-      try
-      {
-        Claim userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-        if (newKeep.UserId != userId.Value)
+        [HttpGet]
+        public ActionResult<IEnumerable<Keep>> Get()
         {
-          throw new Exception("You can only edit your keeps");
+            try
+            {
+                return Ok(_ks.Get());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-        newKeep.Id = id;
-        return Ok(_ks.Edit(newKeep, userId.Value));
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
 
-    [HttpGet("userId")]
-    public ActionResult<string> GetUserId()
-    {
-      try
-      {
-        Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-        string userId = user.Value;
-        return userId;
-      }
-      catch
-      {
-        return BadRequest("you are not logged in");
-      }
-    }
+        [HttpGet("user")]
+        [Authorize]
+        public ActionResult<IEnumerable<Keep>> GetByUserId()
+        {
+            try
+            {
+                Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                string userId = user.Value;
 
-  }
+                return Ok(_ks.GetByUserId(userId));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{keepId}")]
+        public ActionResult<Keep> GetById(int keepId)
+        {
+            try
+            {
+                Keep foundKeep = _ks.GetById(keepId);
+
+                Claim userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                if (foundKeep.IsPrivate == true && userId.Value != foundKeep.UserId)
+                {
+                    return BadRequest("That keep is private");
+                }
+                return Ok(foundKeep);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult<Keep> Post([FromBody] Keep newKeep)
+        {
+            try
+            {
+                Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                newKeep.UserId = user.Value;
+                return Ok(_ks.Create(newKeep));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public ActionResult<Keep> Delete(int id)
+        {
+            try
+            {
+                Claim User = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                string userId = User.Value;
+                return Ok(_ks.Delete(id, userId));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpPut("{id}")]
+        [Authorize]
+        public ActionResult<Keep> Edit([FromBody] Keep newKeep, int id)
+        {
+            try
+            {
+                Claim userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                if (newKeep.UserId != userId.Value)
+                {
+                    throw new Exception("You can only edit your keeps");
+                }
+                newKeep.Id = id;
+                return Ok(_ks.Edit(newKeep, userId.Value));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("userId")]
+        public ActionResult<string> GetUserId()
+        {
+            try
+            {
+                Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                string userId = user.Value;
+                return userId;
+            }
+            catch
+            {
+                return BadRequest("you are not logged in");
+            }
+        }
+
+    }
 }
