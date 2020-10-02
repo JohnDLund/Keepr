@@ -2,23 +2,27 @@
   <div class="keepDetails container-fluid">
     <div class="row align-items-center">
       <div class="col-8 d-flex justify-content-end">
-        <div class="card p-2 shadow border border-dark" style="width: 30rem;">
+        <div class="card p-2 shadow border border-dark" style="width: 30rem">
           <img :src="activeKeep.img" class="card-img-top" alt="Keep Image..." />
           <div class="card-body">
-            <h5 class="card-title">{{activeKeep.name}}</h5>
-            <p class="card-text">{{activeKeep.description}}</p>
+            <h5 class="card-title">{{ activeKeep.name }}</h5>
+            <p class="card-text">{{ activeKeep.description }}</p>
             <div class="col-12 d-flex justify-content-between">
-              <i class="fa fa-eye p-3">&nbsp;{{activeKeep.views}}</i>
-              <i class="fa fa-floppy-o p-3">&nbsp;{{activeKeep.keeps}}</i>
-              <i class="fa fa-share-alt p-3">&nbsp;{{activeKeep.shares}}</i>
+              <i class="fa fa-eye p-3">&nbsp;{{ activeKeep.views }}</i>
+              <i class="fa fa-floppy-o p-3">&nbsp;{{ activeKeep.keeps }}</i>
+              <i class="fa fa-share-alt p-3">&nbsp;{{ activeKeep.shares }}</i>
             </div>
             <div class="row justify-content-between px-3 pt-2">
               <button
                 class="btn btn-sm btn-danger shadow"
                 v-if="activeKeep.userId == userId"
                 @click="deleteKeep(activeKeep.id)"
-              >Delete</button>
-              <i v-if="activeKeep.isPrivate" class="fa fa-lock">&nbsp; Private</i>
+              >
+                Delete
+              </button>
+              <i v-if="activeKeep.isPrivate" class="fa fa-lock"
+                >&nbsp; Private</i
+              >
             </div>
           </div>
         </div>
@@ -32,7 +36,8 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-            >+ Add this Keep to a Vault</a>
+              >+ Add this Keep to a Vault</a
+            >
             <div class="dropdown-menu bg-secondary shadow">
               <a
                 v-for="vault in vaults"
@@ -40,7 +45,8 @@
                 href="#"
                 class="dropdown-item bg-secondary text-capitalize text-center"
                 @click="addToVault(vault.id)"
-              >{{vault.name}}</a>
+                >{{ vault.name }}</a
+              >
             </div>
           </div>
         </div>

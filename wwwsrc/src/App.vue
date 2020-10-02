@@ -15,8 +15,8 @@ export default {
     this.$store.dispatch("setBearer", this.$auth.bearer);
   },
   components: {
-    Navbar
-  }
+    Navbar,
+  },
 };
 </script>
 

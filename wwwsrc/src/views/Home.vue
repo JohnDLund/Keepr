@@ -1,6 +1,10 @@
 <template>
   <div class="home container-fluid">
-    <h1 class="row p-3 justify-content-center border-top border-dark">Public Keeps</h1>
+    <h1
+      class="row p-3 justify-content-center border-top border-dark text-warning"
+    >
+      Public Keeps
+    </h1>
     <div class="row p-3 justify-content-center">
       <keepCard
         class="m-2"

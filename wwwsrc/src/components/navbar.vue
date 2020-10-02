@@ -1,6 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <router-link class="navbar-brand" :to="{ name: 'home' }">Keepr</router-link>
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary shadow-lg">
+    <router-link class="navbar-brand text-warning" :to="{ name: 'home' }"
+      >Keepr</router-link
+    >
     <button
       class="navbar-toggler"
       type="button"
@@ -14,40 +16,62 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" :class="{ active: $route.name == 'home' }">
-          <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
+        <li
+          class="nav-item text-info"
+          :class="{ active: $route.name == 'home' }"
+        >
+          <router-link :to="{ name: 'home' }" class="nav-link text-info"
+            >Home</router-link
+          >
         </li>
         <li
           class="nav-item"
           v-if="$auth.isAuthenticated"
           :class="{ active: $route.name == 'dashboard' }"
         >
-          <router-link class="nav-link" :to="{ name: 'dashboard' }">My-Dashboard</router-link>
+          <router-link class="nav-link text-danger" :to="{ name: 'dashboard' }"
+            >My-Dashboard</router-link
+          >
         </li>
         <li class="nav-item dropdown" v-if="$auth.isAuthenticated">
           <a
-            class="nav-link dropdown-toggle"
+            class="nav-link dropdown-toggle text-danger"
             role="button"
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-          >My Vaults</a>
+            >My Vaults</a
+          >
 
-          <div class="dropdown-menu bg-secondary shadow">
+          <div class="dropdown-menu bg-warning shadow">
             <!-- <router-view :key="$route.fullPath"></router-view> -->
             <router-link
               v-for="vault in vaults"
               :key="vault.id"
               href="#"
-              class="dropdown-item bg-secondary text-capitalize text-center"
+              class="dropdown-item bg-bg-warning text-capitalize text-center text-primary"
               :to="{ name: 'vault', params: { id: vault.id } }"
-            >{{vault.name}}</router-link>
+              >{{ vault.name }}</router-link
+            >
           </div>
         </li>
       </ul>
       <span class="navbar-text">
-        <button class="btn btn-success" @click="login" v-if="!$auth.isAuthenticated">Login</button>
-        <button class="btn btn-danger shadow" @click="logout" v-else>logout</button>
+        <button
+          class="btn btn-success"
+          @click="login"
+          v-if="!$auth.isAuthenticated"
+        >
+          Login
+        </button>
+        <button
+          class="btn shadow text-white"
+          style="background-color: #a00000"
+          @click="logout"
+          v-else
+        >
+          logout
+        </button>
       </span>
     </div>
   </nav>
