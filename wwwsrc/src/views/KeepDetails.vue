@@ -1,24 +1,30 @@
 <template>
   <div class="keepDetails container-fluid">
-    <div class="row align-items-center">
-      <div class="col-8 d-flex justify-content-end">
-        <div class="card p-2 shadow border border-dark" style="width: 30rem">
+    <div class="row align-items-center p-4">
+      <div class="col-md-7 d-flex justify-content-end">
+        <div class="card p-2 borderTrim bg-info" style="width: 30rem">
           <img :src="activeKeep.img" class="card-img-top" alt="Keep Image..." />
           <div class="card-body">
             <h5 class="card-title">{{ activeKeep.name }}</h5>
             <p class="card-text">{{ activeKeep.description }}</p>
             <div class="col-12 d-flex justify-content-between">
-              <i class="fa fa-eye p-3">&nbsp;{{ activeKeep.views }}</i>
-              <i class="fa fa-floppy-o p-3">&nbsp;{{ activeKeep.keeps }}</i>
-              <i class="fa fa-share-alt p-3">&nbsp;{{ activeKeep.shares }}</i>
+              <i class="fa fa-eye p-3"
+                >&nbsp;<span class="iconText">{{ activeKeep.views }}</span></i
+              >
+              <i class="fa fa-floppy-o p-3"
+                >&nbsp;<span class="iconText">{{ activeKeep.keeps }}</span></i
+              >
+              <i class="fa fa-share-alt p-3"
+                >&nbsp;<span class="iconText">{{ activeKeep.shares }}</span></i
+              >
             </div>
             <div class="row justify-content-between px-3 pt-2">
               <button
-                class="btn btn-sm btn-danger shadow"
+                class="btn btn-sm btn-block btn-info shadow border border-secondary text-danger"
                 v-if="activeKeep.userId == userId"
                 @click="deleteKeep(activeKeep.id)"
               >
-                Delete
+                <i class="fa fa-trash text-primary"></i>
               </button>
               <i v-if="activeKeep.isPrivate" class="fa fa-lock"
                 >&nbsp; Private</i
@@ -27,27 +33,25 @@
           </div>
         </div>
       </div>
-      <div class="col-4 d-flex justify-content-start">
+      <div class="col-md-5 d-flex justify-content-start">
         <div class="btn-group">
-          <div class="btn-group">
+          <a
+            class="btn btn-warning btn-lg dropdown-toggle text-primary my-4"
+            type="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >+ Add this Keep to a Vault</a
+          >
+          <div class="dropdown-menu bg-warning shadow text-primary">
             <a
-              class="btn btn-secondary btn-lg dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              >+ Add this Keep to a Vault</a
+              v-for="vault in vaults"
+              :key="vault.id"
+              href="#"
+              class="dropdown-item bg-warning text-capitalize text-center text-primary"
+              @click="addToVault(vault.id)"
+              ><b>{{ vault.name }}</b></a
             >
-            <div class="dropdown-menu bg-secondary shadow">
-              <a
-                v-for="vault in vaults"
-                :key="vault.id"
-                href="#"
-                class="dropdown-item bg-secondary text-capitalize text-center"
-                @click="addToVault(vault.id)"
-                >{{ vault.name }}</a
-              >
-            </div>
           </div>
         </div>
       </div>
@@ -100,5 +104,3 @@ export default {
 </script>
 
 
-<style scoped>
-</style>

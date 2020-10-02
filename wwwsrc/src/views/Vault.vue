@@ -1,6 +1,10 @@
 <template>
   <div class="vault container-fluid">
-    <h1 class="row p-3 justify-content-center border-top border-dark">{{activeVault.name}}</h1>
+    <h1
+      class="row p-3 justify-content-center border-top border-dark text-warning"
+    >
+      {{ activeVault.name }}
+    </h1>
     <div class="row p-3">
       <keepCard
         class="m-2"

@@ -107,6 +107,7 @@ export default new Vuex.Store({
         let res = await api.delete("keeps/" + keepId)
         console.log("Deleted Keep", res.data)
         dispatch("getMyKeeps")
+        dispatch("getPublicKeeps")
       } catch (err) {
         console.error(err)
       }

@@ -29,13 +29,13 @@
           v-if="$auth.isAuthenticated"
           :class="{ active: $route.name == 'dashboard' }"
         >
-          <router-link class="nav-link text-danger" :to="{ name: 'dashboard' }"
+          <router-link class="nav-link text-info" :to="{ name: 'dashboard' }"
             >My-Dashboard</router-link
           >
         </li>
         <li class="nav-item dropdown" v-if="$auth.isAuthenticated">
           <a
-            class="nav-link dropdown-toggle text-danger"
+            class="nav-link dropdown-toggle text-info"
             role="button"
             data-toggle="dropdown"
             aria-haspopup="true"
@@ -43,15 +43,15 @@
             >My Vaults</a
           >
 
-          <div class="dropdown-menu bg-warning shadow">
+          <div class="dropdown-menu bg-warning shadow text-primary">
             <!-- <router-view :key="$route.fullPath"></router-view> -->
             <router-link
               v-for="vault in vaults"
               :key="vault.id"
               href="#"
-              class="dropdown-item bg-bg-warning text-capitalize text-center text-primary"
+              class="dropdown-item bg-warning text-capitalize text-center text-primary"
               :to="{ name: 'vault', params: { id: vault.id } }"
-              >{{ vault.name }}</router-link
+              ><b>{{ vault.name }}</b></router-link
             >
           </div>
         </li>

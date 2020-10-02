@@ -1,37 +1,43 @@
 <template>
-  <div class="card p-2 bg-info borderTrim rounded" style="width: 18rem">
-    <img
-      style="object-fit: contain; width: 100%; max-height: 200px"
-      :src="keepData.img"
-      class="card-img-top"
-      alt="Keep Image..."
-      @click="makeActiveKeep(keepData.id), moveToKeepDetails(keepData.id)"
-    />
-    <div class="card-body">
-      <h5 class="card-title">{{ keepData.name }}</h5>
-      <p class="card-text">{{ keepData.description }}</p>
+  <div class="card p-2 m-4 bg-info borderTrim rounded" style="width: 18rem">
+    <div>
+      <img
+        style="object-fit: contain; width: 100%; max-height: 200px"
+        :src="keepData.img"
+        class="card-img-top"
+        alt="Keep Image..."
+        @click="makeActiveKeep(keepData.id), moveToKeepDetails(keepData.id)"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ keepData.name }}</h5>
+        <p class="card-text">{{ keepData.description }}</p>
 
-      <div class="col-12 d-flex justify-content-between">
-        <i class="fa fa-eye p-3">&nbsp;{{ keepData.views }}</i>
-        <i class="fa fa-floppy-o p-3">&nbsp;{{ keepData.keeps }}</i>
-        <i class="fa fa-share-alt p-3" @click="editKeep"
-          >&nbsp;{{ keepData.shares }}</i
-        >
+        <div class="col-12 d-flex justify-content-between">
+          <i class="fa fa-eye p-3"
+            >&nbsp;<span class="iconText">{{ keepData.views }}</span></i
+          >
+          <i class="fa fa-floppy-o p-3"
+            >&nbsp;<span class="iconText">{{ keepData.keeps }}</span></i
+          >
+          <i class="fa fa-share-alt p-3" @click="editKeep"
+            >&nbsp;<span class="iconText">{{ keepData.shares }}</span></i
+          >
+        </div>
       </div>
       <div class="row justify-content-between px-3 pt-2">
         <button
-          class="btn btn-sm btn-warning shadow"
+          class="btn btn-sm btn-block btn-info shadow border border-secondary"
           @click="deleteKeep(keepData.id)"
           v-if="keepData.userId == userId"
         >
-          Delete
+          <i class="fa fa-trash text-primary"></i> Delete Keep
         </button>
         <button
-          class="btn btn-sm btn-danger shadow"
+          class="btn btn-sm btn-block btn-danger shadow mt-2"
           @click="deleteVaultKeepRelationship"
           v-if="vaultKeepRelationshipData"
         >
-          Delete From Vault
+          Remove From Vault
         </button>
         <i v-if="keepData.isPrivate" class="fa fa-lock">&nbsp; Private</i>
       </div>
@@ -88,17 +94,3 @@ export default {
 </script>
 
 
-<style scoped>
-.borderTrim {
-  -webkit-box-shadow: 0px 0px 5px 5px #fca311ff;
-  box-shadow: 0px 0px 5px 5px #fca311ff;
-  border: solid thick #000000ff;
-}
-
-.borderTrim:hover {
-  -webkit-box-shadow: 0px 0px 5px 5px #000000ff;
-  box-shadow: 0px 0px 5px 5px #000000ff;
-  border: solid thick #fca311ff;
-  transition: 0.4s;
-}
-</style>

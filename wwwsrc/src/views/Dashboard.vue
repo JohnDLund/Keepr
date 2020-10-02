@@ -1,8 +1,15 @@
 <template>
   <div class="dashboard container-fluid">
-    <h1 class="row p-3 justify-content-center border-top border-dark">My Vaults</h1>
+    <h1
+      class="row p-3 justify-content-center border-top border-dark text-warning"
+    >
+      My Vaults
+    </h1>
 
-    <form class="row justify-content-center align-items-center" @submit.prevent="createNewVault">
+    <form
+      class="row justify-content-center align-items-center text-warning"
+      @submit.prevent="createNewVault"
+    >
       <div class="col-2">
         <div class="form-group">
           <label for="newVaultName">New Vault Name</label>
@@ -27,27 +34,47 @@
           />
         </div>
       </div>
-      <button type="submit" class="btn btn-sm btn-primary mt-3 ml-2 shadow">Submit</button>
+      <button
+        type="submit"
+        class="btn btn-sm btn-primary border border-info mt-3 ml-2 shadow"
+      >
+        Submit
+      </button>
     </form>
     <div class="row p-3 justify-content-center">
-      <div v-for="vault in vaults" :key="vault.id" class="card shadow border border-dark m-3 col-3">
+      <div
+        v-for="vault in vaults"
+        :key="vault.id"
+        class="card bg-info m-3 col-3 borderTrim"
+      >
         <div class="card-body">
-          <h5 class="card-title">{{vault.name}}</h5>
-          <p class="card-text">{{vault.description}}</p>
+          <h5 class="card-title">{{ vault.name }}</h5>
+          <p class="card-text">{{ vault.description }}</p>
           <div class="row justify-content-between">
             <button
               class="btn btn-sm btn-primary shadow"
               @click="goToVault(vault.id)"
-            >See Keeps in this Vault</button>
-            <button class="btn btn-sm btn-danger shadow" @click="deleteVault(vault.id)">Delete</button>
+            >
+              See Keeps in this Vault
+            </button>
+            <button
+              class="btn btn-sm btn-danger shadow"
+              @click="deleteVault(vault.id)"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <h1 class="row p-3 justify-content-center mt-2 border-top border-dark">My Keeps</h1>
+    <h1
+      class="row p-3 justify-content-center mt-2 border-top border-dark text-warning"
+    >
+      My Keeps
+    </h1>
     <form
-      class="row justify-content-center align-items-center p-3 mb-4"
+      class="row justify-content-center align-items-center p-3 mb-4 text-warning"
       @submit.prevent="createNewKeep"
     >
       <div class="col-2">
@@ -94,10 +121,17 @@
             id="newKeepPrivateCheck"
             v-model="newKeepObject.isPrivate"
           />
-          <label class="form-check-label" for="newKeepPrivateCheck">Make Private?</label>
+          <label class="form-check-label" for="newKeepPrivateCheck"
+            >Make Private?</label
+          >
         </div>
       </div>
-      <button type="submit" class="btn btn-sm btn-primary mt-3 ml-3 shadow">Submit</button>
+      <button
+        type="submit"
+        class="btn btn-sm btn-primary mt-3 ml-3 shadow border border-info"
+      >
+        Submit
+      </button>
     </form>
     <div class="row p-3 justify-content-center">
       <keepCard
@@ -168,4 +202,4 @@ export default {
 };
 </script>
 
-<style></style>
+
